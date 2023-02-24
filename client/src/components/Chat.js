@@ -44,8 +44,18 @@ function Chat() {
           {chatHistory.map((val) => {
             return (
               <>
-                {val.You && <div className="question-you">You: {val.You}</div>}
-                {val.Bot && <div className="answer-bot ">Bot: {val.Bot}</div>}
+                {val.You && (
+                  <div className="question-you">
+                    <div className="image-you">M</div>{" "}
+                    <div className="text-you">{val.You}</div>
+                  </div>
+                )}
+                {val.Bot && (
+                  <div className="answer-bot ">
+                    <div className="image-bot">B</div>{" "}
+                    <div className="text-bot">{val.Bot}</div>
+                  </div>
+                )}
               </>
             );
           })}
@@ -54,6 +64,7 @@ function Chat() {
           <TextField
             label="Message"
             className="chat-input"
+            multiline
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
             onKeyDown={(event) => {
