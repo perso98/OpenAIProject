@@ -33,3 +33,18 @@ app.post("/getAnswer", async (req, res) => {
     res.send(err);
   }
 });
+
+app.post("/generatePhoto", async (req, res) => {
+  const { text } = req.body;
+  try {
+    const response = await openai.createImage({
+      prompt: text,
+      n: 1,
+      size: "256x256",
+    });
+
+    res.send(response.data.data[0].url);
+  } catch (err) {
+    res.send(err);
+  }
+});
