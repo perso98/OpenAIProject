@@ -1,16 +1,9 @@
 import React from "react";
 import Chat from "../components/Chat";
-
+import "../App.css";
 function ChatPage() {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        height: "90vh",
-        alignItems: "center",
-      }}
-    >
+    <div className="center-div ">
       <Chat style={{ alignSelf: "center" }} />
     </div>
   );

@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import { InputAdornment } from "@mui/material";
-import axios from "axios";
+import { handleSubmit } from "../utils/api";
 import "../App.css";
 
 function Chat() {
@@ -21,35 +21,8 @@ function Chat() {
     }
   }, [chatHistory]);
 
-  const handleSubmit = async () => {
-    setQuestion("");
-    setMessageLoading(true);
-    setChatHistory((prevHistory) => [
-      ...prevHistory,
-      { You: question, Bot: "writting..." },
-    ]);
-    axios
-      .post("http://localhost:3001/getAnswer", {
-        question: question,
-      })
-
-      .then((res) => {
-        setChatHistory((prevHistory) => {
-          const latestQuestion = prevHistory[prevHistory.length - 1].You;
-          const updatedHistory = prevHistory.slice(0, -1);
-          return [...updatedHistory, { You: latestQuestion, Bot: res.data }];
-        });
-        setMessageLoading(false);
-      })
-      .catch((error) => {
-        setChatHistory((prevHistory) => {
-          const latestQuestion = prevHistory[prevHistory.length - 1].You;
-          const updatedHistory = prevHistory.slice(0, -1);
-
-          return [...updatedHistory, { You: latestQuestion, Bot: error }];
-        });
-        setMessageLoading(false);
-      });
+  const handleOnSubmit = () => {
+    handleSubmit(question, setQuestion, setChatHistory, setMessageLoading);
   };
   return (
     <>
@@ -84,7 +57,7 @@ function Chat() {
               onChange={(e) => setQuestion(e.target.value)}
               onKeyDown={(event) => {
                 if (event.keyCode === 13) {
-                  handleSubmit();
+                  handleOnSubmit();
                 }
               }}
               inputRef={inputRef}
@@ -96,7 +69,7 @@ function Chat() {
                       color="success"
                       className="chat-send-btn"
                       startIcon={<SendIcon />}
-                      onClick={() => handleSubmit()}
+                      onClick={() => handleOnSubmit()}
                     >
                       Send
                     </Button>

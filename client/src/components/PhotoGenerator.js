@@ -12,8 +12,8 @@ function PhotoGenerator() {
   const [loading, setLoading] = useState(false);
   const [firstLoadedImage, setFirstLoadedImage] = useState(false);
   const handleSubmit = async () => {
-    setFirstLoadedImage(true);
     setLoading(true);
+    setFirstLoadedImage(true);
     axios
       .post("http://localhost:3001/generatePhoto", {
         text: text,

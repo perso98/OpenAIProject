@@ -1,15 +1,9 @@
 import React from "react";
 import PhotoGenerator from "../components/PhotoGenerator";
-
+import "../App.css";
 function PhotoGeneratorPage() {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        height: "90vh",
-      }}
-    >
+    <div className="center-div">
       <PhotoGenerator style={{ alignSelf: "center" }} />
     </div>
   );

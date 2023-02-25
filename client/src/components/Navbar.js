@@ -14,6 +14,12 @@ function Navbar() {
         <div className="nav-element">
           <NavLink to="/photogenerator">Photos</NavLink>
         </div>
+        <div className="nav-element">
+          <NavLink to="/login">Login</NavLink>
+        </div>
+        <div className="nav-element">
+          <NavLink to="/register">Register</NavLink>
+        </div>
       </div>
     </nav>
   );

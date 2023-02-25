@@ -15,8 +15,6 @@
   flex-direction: column;
   justify-content: flex-end;
   padding: 2rem;
-
-  
 }
 
 .question-answer-container {
@@ -132,13 +130,12 @@ nav a {
 
 .generator-container{
   background-color: #f2f2f2;
-  margin-top: 5vh;
   border-radius: 25px;
   padding: 2rem;
   box-shadow: 1px 1px 13px 0px rgba(0, 0, 0, 1);
   align-items: center;
-  width: 50%;
-  height: 60vh;
+  width: 80vh;
+  height: 70%;
   display: flex;
   flex-direction: column;
   gap:6vh;
@@ -160,4 +157,31 @@ nav a {
 .generator-progress
 {
   margin-top: 16vh;
+}
+
+.center-div {
+  margin-top: 10vh;
+  display: flex ;
+  justify-content: center ;
+  height: 90vh;
+}
+
+.login-container {
+  width: 80vh;
+  display: flex;
+  justify-content: center;
+  max-height: 40vh;
+
+
+}
+
+.login-elements {
+  box-shadow: 1px 1px 13px 0px rgba(0, 0, 0, 1);
+  display: flex;
+  gap:2vh;
+  background-color: #f2f2f2;
+  padding: 2rem;
+  border-radius: 25px;
+  flex-direction: column;
+  width: 50%;
 }
