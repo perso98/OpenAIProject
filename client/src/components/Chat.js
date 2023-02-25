@@ -28,9 +28,9 @@ function Chat() {
     <>
       <div className="chat-container">
         <div className="question-answer-container" ref={chatHistoryRef}>
-          {chatHistory.map((val) => {
+          {chatHistory.map((val, index) => {
             return (
-              <>
+              <React.Fragment key={index}>
                 {val.You && (
                   <div className="question-you">
                     <div className="image-you">M</div>{" "}
@@ -43,7 +43,7 @@ function Chat() {
                     <div className="text-bot">{val.Bot}</div>
                   </div>
                 )}
-              </>
+              </React.Fragment>
             );
           })}
         </div>

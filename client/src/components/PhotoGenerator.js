@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import { InputAdornment } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import axios from "axios";
+import { generatePhoto, savePicture } from "../utils/api";
 import "../App.css";
 function PhotoGenerator() {
   const [text, setText] = useState("");
@@ -12,21 +12,10 @@ function PhotoGenerator() {
   const [loading, setLoading] = useState(false);
   const [firstLoadedImage, setFirstLoadedImage] = useState(false);
   const handleSubmit = async () => {
-    setLoading(true);
-    setFirstLoadedImage(true);
-    axios
-      .post("http://localhost:3001/generatePhoto", {
-        text: text,
-      })
-
-      .then((res) => {
-        setPhotoUrl(res.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error);
-      });
+    generatePhoto(setLoading, setFirstLoadedImage, text, setPhotoUrl);
+  };
+  const handleSavePicture = async () => {
+    savePicture(text, photoUrl);
   };
   return (
     <div className="generator-container">
@@ -65,7 +54,11 @@ function PhotoGenerator() {
             <div className="photo-generated">
               <img src={photoUrl} />
             </div>
-            <Button variant="contained" color="success">
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => handleSavePicture()}
+            >
               Save
             </Button>
           </>

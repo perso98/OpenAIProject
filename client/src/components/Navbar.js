@@ -20,6 +20,9 @@ function Navbar() {
         <div className="nav-element">
           <NavLink to="/register">Register</NavLink>
         </div>
+        <div className="nav-element">
+          <NavLink to="/pictures">Pictures</NavLink>
+        </div>
       </div>
     </nav>
   );

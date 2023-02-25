@@ -1,50 +1,38 @@
 const express = require("express");
-const { Configuration, OpenAIApi } = require("openai");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const configuration = new Configuration({
-  organization: "org-ZfCMQTMHvH0VP2a6p0R00tuP",
-  apiKey: "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",
-});
-const openai = new OpenAIApi(configuration);
-
+const { sequelize } = require("./models");
+const aiRoute = require("./routes/ai");
+const pictureRoute = require("./routes/picture");
 const app = express();
+const session = require("express-session");
+
+app.use(
+  session({
+    secret: "my-secret-key",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+app.use("/ai", aiRoute);
+app.use("/picture", pictureRoute);
 const port = 3001;
+sequelize.sync().then(() => {
+  console.log("Database synchronized");
+});
 app.listen(port, () => {
   console.log("Server is working on port ", port);
-});
-
-app.post("/getAnswer", async (req, res) => {
-  const { question } = req.body;
-  try {
-    const response = await openai.createCompletion({
-      model: "text-davinci-002",
-      prompt: question,
-      max_tokens: 200,
-      temperature: 0,
-    });
-
-    res.send(response.data.choices[0].text);
-  } catch (err) {
-    res.send(err);
-  }
-});
-
-app.post("/generatePhoto", async (req, res) => {
-  const { text } = req.body;
-  try {
-    const response = await openai.createImage({
-      prompt: text,
-      n: 1,
-      size: "256x256",
-    });
-
-    res.send(response.data.data[0].url);
-  } catch (err) {
-    res.send(err);
-  }
 });

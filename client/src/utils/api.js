@@ -14,7 +14,7 @@ export const handleSubmit = async (
     { You: question, Bot: "writting..." },
   ]);
   try {
-    const response = await axios.post(`${API_URL}/getAnswer`, {
+    const response = await axios.post(`${API_URL}/ai/getAnswer`, {
       question: question,
     });
     const botAnswer = response.data;
@@ -31,4 +31,42 @@ export const handleSubmit = async (
     });
   }
   setMessageLoading(false);
+};
+
+export const generatePhoto = async (
+  setLoading,
+  setFirstLoadedImage,
+  text,
+  setPhotoUrl
+) => {
+  setLoading(true);
+  setFirstLoadedImage(true);
+  axios
+    .post("http://localhost:3001/ai/generatePhoto", {
+      text: text,
+    })
+
+    .then((res) => {
+      setPhotoUrl(res.data);
+      setLoading(false);
+    })
+    .catch((error) => {
+      setLoading(false);
+      console.log(error);
+    });
+};
+
+export const savePicture = async (text, url) => {
+  try {
+    axios
+      .post(`${API_URL}/picture/sendPicture`, {
+        text: text,
+        url: url,
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  } catch (err) {
+    console.log(err);
+  }
 };
