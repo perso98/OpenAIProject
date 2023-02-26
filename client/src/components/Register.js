@@ -1,16 +1,21 @@
 import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import "../App.css";
+import { registerAccount } from "../utils/api";
 
 function Register() {
   const [loginForm, setLoginForm] = useState({
     login: "",
     password: "",
-    password2: "",
+    confirmPassword: "",
   });
+  const handleSubmit = (user) => {
+    registerAccount(user.login, user.password);
+  };
   return (
     <div className="login-container">
       <div className="login-elements">
+        <h1 style={{ textAlign: "center" }}>Register</h1>
         <TextField
           label="Login"
           onChange={(e) =>
@@ -26,14 +31,14 @@ function Register() {
         <TextField
           label="Confirm password"
           onChange={(e) =>
-            setLoginForm({ ...loginForm, password2: e.target.value })
+            setLoginForm({ ...loginForm, confirmPassword: e.target.value })
           }
         />
-        {loginForm.login && loginForm.password && loginForm.password2 ? (
+        {loginForm.login && loginForm.password && loginForm.confirmPassword ? (
           <Button
             variant="contained"
             color="success"
-            onClick={() => console.log(loginForm)}
+            onClick={() => handleSubmit(loginForm)}
           >
             {" "}
             Register

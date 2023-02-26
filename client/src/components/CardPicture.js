@@ -1,11 +1,110 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
+import axios from "axios";
+import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { IconButton } from "@mui/material";
+import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 function CardPicture() {
+  const [pictures, setPictures] = useState([]);
+  const [pictureNumber, setPictureNumber] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/picture/getPictures")
+      .then((res) => {
+        setPictures(res.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div className="picture-card-container">
-      <div className="picture-card">
-        <img src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-ZfCMQTMHvH0VP2a6p0R00tuP/user-6r4osZv8Seas323g24BeKqDk/img-AzgBeuIgB5LqitO7Wx4aupvM.png?st=2023-02-25T17%3A11%3A33Z&se=2023-02-25T19%3A11%3A33Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-02-25T11%3A07%3A57Z&ske=2023-02-26T11%3A07%3A57Z&sks=b&skv=2021-08-06&sig=vWkPsI6jIYbt2AFxB4S5Q4YZPjznstB87yDJ65wNwns%3D" />
-      </div>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        pictures.length > 0 && (
+          <div className="picture-card" key={pictures[pictureNumber].id}>
+            <img
+              src={`http://localhost:3001/public${pictures[pictureNumber].url}`}
+            />
+            <div style={{ marginTop: "1rem" }}>
+              <div style={{ marginLeft: "1rem", marginRight: "1rem" }}>
+                <div
+                  style={{
+                    fontWeight: "600",
+                    textAlign: "center",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  {pictures[pictureNumber].User.login}
+                </div>
+                <div>{pictures[pictureNumber].text}</div>
+              </div>
+              <div style={{ textAlign: "center" }}>
+                {pictureNumber === 0 ? (
+                  <IconButton>
+                    <ArrowBackIosIcon
+                      style={{
+                        fontSize: "1rem",
+                        color: "gray",
+                        padding: "0.5rem",
+                      }}
+                      disabled={true}
+                    />
+                  </IconButton>
+                ) : (
+                  <IconButton>
+                    <ArrowBackIosIcon
+                      style={{
+                        fontSize: "1rem",
+                        color: "black",
+                        padding: "0.5rem",
+                      }}
+                      onClick={() => setPictureNumber(pictureNumber - 1)}
+                    />
+                  </IconButton>
+                )}
+                <IconButton>
+                  <FavoriteIcon
+                    style={{
+                      fontSize: "2rem",
+                      color: "black",
+                      padding: "0.5rem",
+                    }}
+                  />
+                </IconButton>
+                {pictureNumber === pictures.length - 1 ? (
+                  <IconButton>
+                    <ArrowForwardIosOutlinedIcon
+                      style={{
+                        fontSize: "1rem",
+                        color: "gray",
+                        padding: "0.5rem",
+                      }}
+                      disabled={true}
+                    />
+                  </IconButton>
+                ) : (
+                  <IconButton>
+                    <ArrowForwardIosOutlinedIcon
+                      style={{
+                        fontSize: "1rem",
+                        color: "black",
+                        padding: "0.5rem",
+                      }}
+                      onClick={() => setPictureNumber(pictureNumber + 1)}
+                    />
+                  </IconButton>
+                )}
+              </div>
+            </div>
+          </div>
+        )
+      )}
     </div>
   );
 }

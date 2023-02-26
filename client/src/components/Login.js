@@ -1,11 +1,17 @@
 import { Button, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider ";
 import "../App.css";
 function Login() {
+  const { login } = useContext(AuthContext);
   const [loginForm, setLoginForm] = useState({ login: "", password: "" });
+  const handleSubmit = (user) => {
+    login(user.login, user.password);
+  };
   return (
     <div className="login-container">
       <div className="login-elements">
+        <h1 style={{ textAlign: "center" }}>Login</h1>
         <TextField
           label="Login"
           onChange={(e) =>
@@ -22,7 +28,7 @@ function Login() {
           <Button
             variant="contained"
             color="success"
-            onClick={() => console.log(loginForm)}
+            onClick={() => handleSubmit(loginForm)}
           >
             {" "}
             Log in

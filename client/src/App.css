@@ -156,7 +156,7 @@ nav a {
 
 .generator-progress
 {
-  margin-top: 16vh;
+  margin-top: 10vh;
 }
 
 .center-div {
@@ -184,4 +184,16 @@ nav a {
   border-radius: 25px;
   flex-direction: column;
   width: 50%;
+}
+
+.picture-card {
+  box-shadow: 1px 1px 13px 0px rgba(0, 0, 0, 1);
+  border-radius: 25px;
+  max-width: 256px;
+  word-wrap: break-word;
+  background-color: #f2f2f2;
+}
+.picture-card img {
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
 }

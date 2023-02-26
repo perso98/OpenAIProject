@@ -19,6 +19,7 @@ function PhotoGenerator() {
   };
   return (
     <div className="generator-container">
+      <h1 style={{ textAlign: "center" }}>Photo Generator</h1>
       <div className="textfield-generator">
         <TextField
           style={{ width: "100%" }}

@@ -27,6 +27,7 @@ function Chat() {
   return (
     <>
       <div className="chat-container">
+        <h1 style={{ textAlign: "center" }}>Chat</h1>
         <div className="question-answer-container" ref={chatHistoryRef}>
           {chatHistory.map((val, index) => {
             return (

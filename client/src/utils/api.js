@@ -1,5 +1,6 @@
 import axios from "axios";
 const API_URL = "http://localhost:3001";
+axios.defaults.withCredentials = true;
 //funkcja pobierająca odpowiedzi bota i updatejtująca czat
 export const handleSubmit = async (
   question,
@@ -66,6 +67,45 @@ export const savePicture = async (text, url) => {
       .then((res) => {
         console.log(res);
       });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getAuth = async (setUser) => {
+  try {
+    axios.get(`${API_URL}/user/getAuth`).then((res) => {
+      setUser(res.data.user);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const loginToAccount = async (setUser, login, password) => {
+  try {
+    axios
+      .post(`${API_URL}/user/loginToAccount`, {
+        login: login,
+        password: password,
+      })
+      .then((res) => {
+        if (res.user) setUser(res.user);
+        console.log(res);
+      });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const registerAccount = async (login, password) => {
+  try {
+    axios
+      .post(`${API_URL}/user/registerAccount`, {
+        login: login,
+        password: password,
+      })
+      .then((res) => console.log(res));
   } catch (err) {
     console.log(err);
   }
