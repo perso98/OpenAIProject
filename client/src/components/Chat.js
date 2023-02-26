@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import { InputAdornment } from "@mui/material";
 import { handleSubmit } from "../utils/api";
+import { AuthContext } from "../providers/AuthProvider ";
 import "../App.css";
 
 function Chat() {
@@ -12,6 +13,7 @@ function Chat() {
   const [question, setQuestion] = useState("");
   const chatHistoryRef = useRef(null);
   const inputRef = useRef(null);
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     if (chatHistoryRef.current) {
       chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
@@ -34,7 +36,9 @@ function Chat() {
               <React.Fragment key={index}>
                 {val.You && (
                   <div className="question-you">
-                    <div className="image-you">M</div>{" "}
+                    <div className="image-you">
+                      {user ? user.login.charAt(0).toUpperCase() : "Y"}
+                    </div>{" "}
                     <div className="text-you">{val.You}</div>
                   </div>
                 )}

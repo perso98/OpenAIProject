@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     });
+    models.Picture.hasMany(models.Like, {
+      foreignKey: "PictureId",
+    });
   };
 
   return Picture;

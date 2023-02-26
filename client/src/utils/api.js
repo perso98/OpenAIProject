@@ -42,7 +42,7 @@ export const generatePhoto = async (
 ) => {
   setLoading(true);
   setFirstLoadedImage(true);
-  axios
+  await axios
     .post("http://localhost:3001/ai/generatePhoto", {
       text: text,
     })
@@ -59,7 +59,7 @@ export const generatePhoto = async (
 
 export const savePicture = async (text, url) => {
   try {
-    axios
+    await axios
       .post(`${API_URL}/picture/sendPicture`, {
         text: text,
         url: url,
@@ -74,7 +74,7 @@ export const savePicture = async (text, url) => {
 
 export const getAuth = async (setUser) => {
   try {
-    axios.get(`${API_URL}/user/getAuth`).then((res) => {
+    await axios.get(`${API_URL}/user/getAuth`).then((res) => {
       setUser(res.data.user);
     });
   } catch (err) {
@@ -84,13 +84,13 @@ export const getAuth = async (setUser) => {
 
 export const loginToAccount = async (setUser, login, password) => {
   try {
-    axios
+    await axios
       .post(`${API_URL}/user/loginToAccount`, {
         login: login,
         password: password,
       })
       .then((res) => {
-        if (res.user) setUser(res.user);
+        if (res.data.user) setUser(res.data.user);
         console.log(res);
       });
   } catch (err) {
@@ -100,11 +100,37 @@ export const loginToAccount = async (setUser, login, password) => {
 
 export const registerAccount = async (login, password) => {
   try {
-    axios
+    await axios
       .post(`${API_URL}/user/registerAccount`, {
         login: login,
         password: password,
       })
+      .then((res) => console.log(res));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const logoutFromAccount = async (setUser) => {
+  try {
+    await axios.post(`${API_URL}/user/logout`).then((res) => setUser());
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const likePicture = async (id) => {
+  try {
+    await axios
+      .post(`${API_URL}/picture/likePicture`, { id: id })
+      .then((res) => console.log(res));
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const dislikePicture = async (id) => {
+  try {
+    await axios
+      .post(`${API_URL}/picture/dislikePicture`, { id: id })
       .then((res) => console.log(res));
   } catch (err) {
     console.log(err);

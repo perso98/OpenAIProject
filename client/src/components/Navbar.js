@@ -1,7 +1,9 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import "../App.css";
+import { AuthContext } from "../providers/AuthProvider ";
 import { NavLink } from "react-router-dom";
 function Navbar() {
+  const { user, logout } = useContext(AuthContext);
   return (
     <nav>
       <div className="nav-logo">
@@ -11,17 +13,33 @@ function Navbar() {
         <div className="nav-element">
           <NavLink to="/chat">Chat</NavLink>
         </div>
-        <div className="nav-element">
-          <NavLink to="/photogenerator">Photos</NavLink>
-        </div>
-        <div className="nav-element">
-          <NavLink to="/login">Login</NavLink>
-        </div>
-        <div className="nav-element">
-          <NavLink to="/register">Register</NavLink>
-        </div>
+        {user ? (
+          <>
+            <div className="nav-element">
+              <NavLink to="/photogenerator">Create Picture</NavLink>
+            </div>
+          </>
+        ) : null}
         <div className="nav-element">
           <NavLink to="/pictures">Pictures</NavLink>
+        </div>
+        {!user ? (
+          <>
+            <div className="nav-element">
+              <NavLink to="/login">Login</NavLink>
+            </div>
+            <div className="nav-element">
+              <NavLink to="/register">Register</NavLink>
+            </div>
+          </>
+        ) : null}
+
+        <div className="nav-element">
+          {user ? (
+            <NavLink to="/" onClick={() => logout()}>
+              Logout
+            </NavLink>
+          ) : null}
         </div>
       </div>
     </nav>

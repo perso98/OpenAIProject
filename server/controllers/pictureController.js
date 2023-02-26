@@ -1,4 +1,6 @@
-const { Picture, User } = require("../models");
+const { Picture, User, Like } = require("../models");
+const { Op } = require("sequelize");
+const { Sequelize } = require("sequelize");
 const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
@@ -16,7 +18,7 @@ exports.sendPicture = async (req, res) => {
       const picture = await Picture.create({
         url: `/uploads/${fileName}`,
         text: text,
-        UserId: 1,
+        UserId: req.session.user.id,
       });
       res.send({ success: true, picture });
     });
@@ -28,11 +30,74 @@ exports.sendPicture = async (req, res) => {
 
 exports.getPictures = async (req, res) => {
   try {
-    const pictures = await Picture.findAll({
-      include: [{ model: User, required: true }],
-    });
-    res.send(pictures);
+    if (req.session.user) {
+      const pictures = await Picture.findAll({
+        include: [
+          {
+            model: User,
+            required: true,
+          },
+          {
+            model: Like,
+            required: false,
+          },
+        ],
+        where: {
+          id: {
+            [Op.notIn]: Sequelize.literal(
+              `(SELECT PictureId FROM Likes WHERE UserId = ${req.session.user.id})`
+            ),
+          },
+        },
+      });
+      res.send(pictures);
+    } else {
+      const pictures = await Picture.findAll({
+        include: [
+          {
+            model: User,
+            required: true,
+          },
+          {
+            model: Like,
+            required: false,
+          },
+        ],
+      });
+      res.send(pictures);
+    }
   } catch (err) {
+    console.log(err);
     res.send(err);
+  }
+};
+
+exports.likePicture = async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const like = await Like.create({
+      PictureId: id,
+      UserId: req.session.user.id,
+    });
+    res.send(like);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.dislikePicture = async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    await Like.destroy({
+      where: {
+        PictureId: id,
+        UserId: req.session.user.id,
+      },
+    });
+    res.send({ message: true });
+  } catch (err) {
+    console.log(err);
   }
 };

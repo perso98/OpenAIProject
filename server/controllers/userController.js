@@ -44,3 +44,12 @@ exports.loginToAccount = async (req, res) => {
     res.send({ message: "Some error" });
   }
 };
+
+exports.logout = async (req, res, next) => {
+  try {
+    req.session.destroy();
+    next();
+  } catch (err) {
+    console.log(err);
+  }
+};
