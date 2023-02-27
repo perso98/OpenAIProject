@@ -48,6 +48,9 @@ exports.getPictures = async (req, res) => {
               `(SELECT PictureId FROM Likes WHERE UserId = ${req.session.user.id})`
             ),
           },
+          UserId: {
+            [Op.ne]: req.session.user.id,
+          },
         },
       });
       res.send(pictures);
@@ -70,6 +73,53 @@ exports.getPictures = async (req, res) => {
     console.log(err);
     res.send(err);
   }
+};
+
+exports.getUserPictures = async (req, res) => {
+  const pictures = await Picture.findAll({
+    include: [
+      {
+        model: User,
+        required: true,
+      },
+      {
+        model: Like,
+        required: false,
+      },
+    ],
+    where: {
+      UserId: {
+        [Op.eq]: req.session.user.id,
+      },
+    },
+  });
+  res.send(pictures);
+};
+
+exports.getFavorites = async (req, res) => {
+  const pictures = await Picture.findAll({
+    include: [
+      {
+        model: User,
+        required: true,
+      },
+      {
+        model: Like,
+        required: false,
+      },
+    ],
+    where: {
+      id: {
+        [Op.in]: Sequelize.literal(
+          `(SELECT PictureId FROM Likes WHERE UserId = ${req.session.user.id})`
+        ),
+      },
+      UserId: {
+        [Op.ne]: req.session.user.id,
+      },
+    },
+  });
+  res.send(pictures);
 };
 
 exports.likePicture = async (req, res) => {

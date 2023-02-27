@@ -11,6 +11,7 @@ function PhotoGenerator() {
   const [photoUrl, setPhotoUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [firstLoadedImage, setFirstLoadedImage] = useState(false);
+  const [sendPicture, setSendPicture] = useState(false);
   const handleSubmit = async () => {
     generatePhoto(setLoading, setFirstLoadedImage, text, setPhotoUrl);
   };
@@ -19,7 +20,7 @@ function PhotoGenerator() {
   };
   return (
     <div className="generator-container">
-      <h1 style={{ textAlign: "center" }}>Photo Generator</h1>
+      <h1 style={{ textAlign: "center" }}>Picture Generator</h1>
       <div className="textfield-generator">
         <TextField
           style={{ width: "100%" }}
@@ -40,7 +41,10 @@ function PhotoGenerator() {
                   color="success"
                   className="chat-send-btn"
                   startIcon={<SendIcon />}
-                  onClick={() => handleSubmit()}
+                  onClick={() => {
+                    handleSubmit();
+                    setSendPicture(true);
+                  }}
                 >
                   Send
                 </Button>
@@ -55,13 +59,22 @@ function PhotoGenerator() {
             <div className="photo-generated">
               <img src={photoUrl} />
             </div>
-            <Button
-              variant="contained"
-              color="success"
-              onClick={() => handleSavePicture()}
-            >
-              Save
-            </Button>
+            {sendPicture ? (
+              <Button
+                variant="contained"
+                color="success"
+                onClick={() => {
+                  handleSavePicture();
+                  setSendPicture(false);
+                }}
+              >
+                Save
+              </Button>
+            ) : (
+              <Button variant="contained" color="success" disabled={true}>
+                Save
+              </Button>
+            )}
           </>
         ) : (
           <div className="generator-progress">

@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import CardPicture from "../components/CardPicture";
-import { getPictures } from "../utils/api";
+import { getUserPictures } from "../utils/api";
 import { AuthContext } from "../providers/AuthProvider ";
-function Pictures() {
+function UserPictures() {
   const [pictures, setPictures] = useState([]);
   const [pictureNumber, setPictureNumber] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [likes, setLikes] = useState();
   const { user } = useContext(AuthContext);
-  const allowLike = true;
+  const allowLike = false;
   useEffect(() => {
-    getPictures(setPictures, setLikes, setIsLoading);
+    getUserPictures(setPictures, setLikes, setIsLoading);
   }, []);
-
   return (
     <div>
       <CardPicture
@@ -30,4 +29,4 @@ function Pictures() {
   );
 }
 
-export default Pictures;
+export default UserPictures;

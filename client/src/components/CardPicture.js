@@ -7,137 +7,116 @@ import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutl
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import FavoriteIconLiked from "@mui/icons-material/Favorite";
 import { likePicture, dislikePicture } from "../utils/api";
-import { AuthContext } from "../providers/AuthProvider ";
-function CardPicture() {
-  const [pictures, setPictures] = useState([]);
-  const [pictureNumber, setPictureNumber] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [likes, setLikes] = useState();
-  const { user } = useContext(AuthContext);
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/picture/getPictures")
-      .then((res) => {
-        const shuffledPictures = res.data.sort(() => Math.random() - 0.5);
-        setPictures(shuffledPictures);
-        setLikes(shuffledPictures[0].Likes.length);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  const handleLike = (id) => {
-    likePicture(id);
-    setPictures(
-      pictures.map((val) => {
-        if (val.id === id) {
-          return { ...val, liked: true };
-        }
-        return val;
-      })
-    );
-  };
-  const disLike = (id) => {
-    dislikePicture(id);
-    setPictures(
-      pictures.map((val) => {
-        if (val.id === id) {
-          return { ...val, liked: false };
-        }
-        return val;
-      })
-    );
-  };
+function CardPicture(props) {
   return (
     <div className="picture-card-container">
-      {isLoading ? (
+      {props.isLoading ? (
         <div>Loading...</div>
-      ) : (
-        pictures.length > 0 && (
-          <div className="picture-card" key={pictures[pictureNumber].id}>
-            <img
-              src={`http://localhost:3001/public${pictures[pictureNumber].url}`}
-            />
-            <div style={{ marginTop: "1rem" }}>
-              <div style={{ margin: "0 1rem 0 1rem" }}>
-                <div className="card-login-text">
-                  {pictures[pictureNumber].User.login}
-                </div>
-                <div style={{ marginBottom: "1rem" }}>
-                  {pictures[pictureNumber].text}
-                </div>
+      ) : props.pictures.length !== 0 ? (
+        <div
+          className="picture-card"
+          key={props.pictures[props.pictureNumber].id}
+        >
+          <img
+            src={`http://localhost:3001/public${
+              props.pictures[props.pictureNumber].url
+            }`}
+          />
+          <div style={{ marginTop: "1rem" }}>
+            <div style={{ margin: "0 1rem 0 1rem" }}>
+              <div className="card-login-text">
+                {props.pictures[props.pictureNumber].User.login}
+              </div>
+              <div style={{ marginBottom: "1rem" }}>
+                {props.pictures[props.pictureNumber].text}
+              </div>
 
-                <b>Likes: {likes}</b>
-              </div>
-              <div style={{ textAlign: "center" }}>
-                {pictureNumber === 0 ? (
-                  <IconButton>
-                    <ArrowBackIosIcon
-                      fontSize="small"
-                      className="disabled-arrow"
-                      disabled={true}
+              <b>Likes: {props.likes}</b>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              {props.pictureNumber === 0 ? (
+                <IconButton>
+                  <ArrowBackIosIcon
+                    fontSize="small"
+                    className="disabled-arrow"
+                    disabled={true}
+                  />
+                </IconButton>
+              ) : (
+                <IconButton>
+                  <ArrowBackIosIcon
+                    className="enabled-arrow"
+                    fontSize="small"
+                    onClick={() => {
+                      if (props.pictureNumber > 0) {
+                        props.setPictureNumber(props.pictureNumber - 1);
+                        props.setLikes(
+                          props.pictures[props.pictureNumber - 1].Likes.length
+                        );
+                      }
+                    }}
+                  />
+                </IconButton>
+              )}
+              {props.user && props.allowLike ? (
+                props.pictures[props.pictureNumber].liked ? (
+                  <IconButton
+                    onClick={() =>
+                      dislikePicture(
+                        props.pictures[props.pictureNumber].id,
+                        props.setPictures,
+                        props.pictures
+                      )
+                    }
+                  >
+                    <FavoriteIconLiked
+                      className="heart-icon-liked"
+                      fontSize="large"
                     />
                   </IconButton>
                 ) : (
-                  <IconButton>
-                    <ArrowBackIosIcon
-                      className="enabled-arrow"
-                      fontSize="small"
-                      onClick={() => {
-                        if (pictureNumber > 0) {
-                          setPictureNumber(pictureNumber - 1);
-                          setLikes(pictures[pictureNumber - 1].Likes.length);
-                        }
-                      }}
-                    />
+                  <IconButton
+                    onClick={() =>
+                      likePicture(
+                        props.pictures[props.pictureNumber].id,
+                        props.setPictures,
+                        props.pictures
+                      )
+                    }
+                  >
+                    <FavoriteIcon className="heart-icon" fontSize="large" />
                   </IconButton>
-                )}
-                {user ? (
-                  pictures[pictureNumber].liked ? (
-                    <IconButton
-                      onClick={() => disLike(pictures[pictureNumber].id)}
-                    >
-                      <FavoriteIconLiked
-                        className="heart-icon-liked"
-                        fontSize="large"
-                      />
-                    </IconButton>
-                  ) : (
-                    <IconButton
-                      onClick={() => handleLike(pictures[pictureNumber].id)}
-                    >
-                      <FavoriteIcon className="heart-icon" fontSize="large" />
-                    </IconButton>
-                  )
-                ) : null}
-                {pictureNumber === pictures.length - 1 ? (
-                  <IconButton>
-                    <ArrowForwardIosOutlinedIcon
-                      fontSize="small"
-                      className="disabled-arrow"
-                      disabled={true}
-                    />
-                  </IconButton>
-                ) : (
-                  <IconButton>
-                    <ArrowForwardIosOutlinedIcon
-                      className="enabled-arrow"
-                      fontSize="small"
-                      onClick={() => {
-                        if (pictureNumber < pictures.length - 1) {
-                          setPictureNumber(pictureNumber + 1);
-                          setLikes(pictures[pictureNumber + 1].Likes.length);
-                        }
-                      }}
-                    />
-                  </IconButton>
-                )}
-              </div>
+                )
+              ) : null}
+              {props.pictureNumber === props.pictures.length - 1 ? (
+                <IconButton>
+                  <ArrowForwardIosOutlinedIcon
+                    fontSize="small"
+                    className="disabled-arrow"
+                    disabled={true}
+                  />
+                </IconButton>
+              ) : (
+                <IconButton>
+                  <ArrowForwardIosOutlinedIcon
+                    className="enabled-arrow"
+                    fontSize="small"
+                    onClick={() => {
+                      if (props.pictureNumber < props.pictures.length - 1) {
+                        props.setPictureNumber(props.pictureNumber + 1);
+                        props.setLikes(
+                          props.pictures[props.pictureNumber + 1].Likes.length
+                        );
+                      }
+                    }}
+                  />
+                </IconButton>
+              )}
             </div>
           </div>
-        )
+        </div>
+      ) : (
+        <div>Nothing to show...</div>
       )}
     </div>
   );

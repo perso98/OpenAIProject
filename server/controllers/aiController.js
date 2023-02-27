@@ -10,7 +10,7 @@ exports.getAnswer = async (req, res) => {
     const response = await openai.createCompletion({
       model: "text-davinci-002",
       prompt: question,
-      max_tokens: 200,
+      max_tokens: 400,
       temperature: 0,
     });
 

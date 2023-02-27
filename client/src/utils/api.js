@@ -118,21 +118,78 @@ export const logoutFromAccount = async (setUser) => {
     console.log(err);
   }
 };
-export const likePicture = async (id) => {
+export const likePicture = async (id, setPictures, pictures) => {
   try {
     await axios
       .post(`${API_URL}/picture/likePicture`, { id: id })
-      .then((res) => console.log(res));
+      .then((res) => {
+        setPictures(
+          pictures.map((val) => {
+            if (val.id === id) {
+              return { ...val, liked: true };
+            }
+            return val;
+          })
+        );
+      });
   } catch (err) {
     console.log(err);
   }
 };
-export const dislikePicture = async (id) => {
+export const dislikePicture = async (id, setPictures, pictures) => {
   try {
     await axios
       .post(`${API_URL}/picture/dislikePicture`, { id: id })
-      .then((res) => console.log(res));
+      .then((res) => {
+        setPictures(
+          pictures.map((val) => {
+            if (val.id === id) {
+              return { ...val, liked: false };
+            }
+            return val;
+          })
+        );
+      });
   } catch (err) {
     console.log(err);
   }
+};
+
+export const getPictures = async (setPictures, setLikes, setIsLoading) => {
+  axios
+    .get(`${API_URL}/picture/getPictures`)
+    .then((res) => {
+      const shuffledPictures = res.data.sort(() => Math.random() - 0.5);
+      setPictures(shuffledPictures.map((val) => ({ ...val, liked: false })));
+      setLikes(shuffledPictures[0]?.Likes.length);
+      setIsLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+export const getFavorites = async (setPictures, setLikes, setIsLoading) => {
+  axios
+    .get(`${API_URL}/picture/getFavorites`)
+    .then((res) => {
+      setPictures(res.data.map((val) => ({ ...val, liked: true })));
+      setLikes(res.data[0]?.Likes.length);
+      setIsLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const getUserPictures = async (setPictures, setLikes, setIsLoading) => {
+  axios
+    .get(`${API_URL}/picture/getUserPictures`)
+    .then((res) => {
+      setPictures(res.data);
+      setLikes(res.data[0]?.Likes.length);
+      setIsLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

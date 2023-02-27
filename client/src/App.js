@@ -9,6 +9,9 @@ import PicturesPage from "./pages/PicturesPage";
 import AuthProvider from "./providers/AuthProvider ";
 import ProtectedRoute from "./protected-routes/ProtectedRoute";
 import UserRoute from "./protected-routes/UserRoute";
+import FavoritesPage from "./pages/FavoritesPage";
+import Top20Page from "./pages/Top20Page";
+import UserPicturesPage from "./pages/UserPicturesPage";
 function App() {
   return (
     <>
@@ -19,6 +22,9 @@ function App() {
             <Route path="/pictures" element={<PicturesPage />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/photogenerator" element={<PhotoGeneratorPage />} />
+              <Route path="/favorites" element={<FavoritesPage />} />
+              <Route path="/top" element={<Top20Page />} />
+              <Route path="/userpictures" element={<UserPicturesPage />} />
             </Route>
             <Route path="/chat" element={<ChatPage />} />
             <Route element={<UserRoute />}>

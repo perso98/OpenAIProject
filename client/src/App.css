@@ -109,7 +109,8 @@ nav {
   display:flex;
   justify-content: space-around;
   align-items: center;
-  background-color: #484848; 
+  background: linear-gradient(to right, #333333,
+  #1d1f20, #000000);
   color:white;
   height: 40px;
   padding: 1rem;

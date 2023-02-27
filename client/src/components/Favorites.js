@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import CardPicture from "../components/CardPicture";
-import { getPictures } from "../utils/api";
+import { getFavorites } from "../utils/api";
 import { AuthContext } from "../providers/AuthProvider ";
-function Pictures() {
+function Favorites() {
   const [pictures, setPictures] = useState([]);
   const [pictureNumber, setPictureNumber] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -10,7 +10,7 @@ function Pictures() {
   const { user } = useContext(AuthContext);
   const allowLike = true;
   useEffect(() => {
-    getPictures(setPictures, setLikes, setIsLoading);
+    getFavorites(setPictures, setLikes, setIsLoading);
   }, []);
 
   return (
@@ -30,4 +30,4 @@ function Pictures() {
   );
 }
 
-export default Pictures;
+export default Favorites;
