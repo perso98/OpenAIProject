@@ -18,10 +18,10 @@ function CardPicture() {
     axios
       .get("http://localhost:3001/picture/getPictures")
       .then((res) => {
-        setPictures(res.data);
-        setLikes(res.data[0].Likes.length);
+        const shuffledPictures = res.data.sort(() => Math.random() - 0.5);
+        setPictures(shuffledPictures);
+        setLikes(shuffledPictures[0].Likes.length);
         setIsLoading(false);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);

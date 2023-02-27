@@ -7,6 +7,8 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import PicturesPage from "./pages/PicturesPage";
 import AuthProvider from "./providers/AuthProvider ";
+import ProtectedRoute from "./protected-routes/ProtectedRoute";
+import UserRoute from "./protected-routes/UserRoute";
 function App() {
   return (
     <>
@@ -14,11 +16,15 @@ function App() {
         <BrowserRouter>
           <Navbar />
           <Routes>
-            <Route path="/chat" element={<ChatPage />} />
-            <Route path="/photogenerator" element={<PhotoGeneratorPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
             <Route path="/pictures" element={<PicturesPage />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/photogenerator" element={<PhotoGeneratorPage />} />
+            </Route>
+            <Route path="/chat" element={<ChatPage />} />
+            <Route element={<UserRoute />}>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </AuthProvider>
