@@ -151,3 +151,24 @@ exports.dislikePicture = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.getAllPictures = async (req, res) => {
+  try {
+    const pictures = await Picture.findAll({
+      include: [
+        {
+          model: User,
+          required: true,
+        },
+        {
+          model: Like,
+          required: false,
+        },
+      ],
+    });
+    res.send(pictures);
+  } catch (err) {
+    console.log(err);
+    res.send(err);
+  }
+};

@@ -11,7 +11,7 @@ function CardPicture(props) {
   return (
     <div className="picture-card-container">
       {props.isLoading ? (
-        <div>Loading...</div>
+        <h1 style={{ color: "white" }}>Loading...</h1>
       ) : props.pictures.length !== 0 ? (
         <div
           className="picture-card"
@@ -116,7 +116,7 @@ function CardPicture(props) {
           </div>
         </div>
       ) : (
-        <div>Nothing to show...</div>
+        <div style={{ color: "white" }}>Nothing to show...</div>
       )}
     </div>
   );

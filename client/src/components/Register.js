@@ -24,12 +24,14 @@ function Register() {
         />
         <TextField
           label="Password"
+          type="password"
           onChange={(e) =>
             setLoginForm({ ...loginForm, password: e.target.value })
           }
         />
         <TextField
           label="Confirm password"
+          type="password"
           onChange={(e) =>
             setLoginForm({ ...loginForm, confirmPassword: e.target.value })
           }

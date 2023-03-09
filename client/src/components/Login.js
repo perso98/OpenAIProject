@@ -20,6 +20,7 @@ function Login() {
         />
         <TextField
           label="Password"
+          type="password"
           onChange={(e) =>
             setLoginForm({ ...loginForm, password: e.target.value })
           }

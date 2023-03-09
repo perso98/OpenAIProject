@@ -168,6 +168,21 @@ export const getPictures = async (setPictures, setLikes, setIsLoading) => {
       console.log(err);
     });
 };
+export const getAllPictures = async (setPictures, setLikes, setIsLoading) => {
+  axios
+    .get(`${API_URL}/picture/getAllPictures`)
+    .then((res) => {
+      const sortedPictures = res.data
+        .sort((a, b) => b.Likes.length - a.Likes.length)
+        .slice(0, 20);
+      setPictures(sortedPictures);
+      setLikes(sortedPictures[0]?.Likes.length);
+      setIsLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 export const getFavorites = async (setPictures, setLikes, setIsLoading) => {
   axios
     .get(`${API_URL}/picture/getFavorites`)

@@ -16,20 +16,18 @@ function Navbar() {
         {user ? (
           <>
             <div className="nav-element">
-              <NavLink to="/photogenerator">Create Picture</NavLink>
+              <NavLink to="/photo-generator">Create Picture</NavLink>
             </div>
             <div className="nav-element">
               {" "}
               <NavLink to="/favorites">Favorites</NavLink>{" "}
             </div>
             <div className="nav-element">
-              <NavLink to="/userpictures">Your pics</NavLink>
+              <NavLink to="/user-pictures">Your pics</NavLink>
             </div>
           </>
         ) : null}
-        <div className="nav-element">
-          <NavLink to="/pictures">Pictures</NavLink>
-        </div>
+
         <div className="nav-element">
           <NavLink to="/top">Top 20</NavLink>
         </div>

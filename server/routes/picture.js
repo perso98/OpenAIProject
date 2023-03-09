@@ -8,5 +8,6 @@ router.post("/sendPicture", pictureController.sendPicture);
 router.post("/likePicture", pictureController.likePicture);
 router.post("/dislikePicture", pictureController.dislikePicture);
 router.get("/getUserPictures", pictureController.getUserPictures);
+router.get("/getAllPictures", pictureController.getAllPictures);
 
 module.exports = router;

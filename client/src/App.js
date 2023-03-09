@@ -18,14 +18,15 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Navbar />
+
           <Routes>
-            <Route path="/pictures" element={<PicturesPage />} />
+            <Route path="/" element={<PicturesPage />} />
             <Route element={<ProtectedRoute />}>
-              <Route path="/photogenerator" element={<PhotoGeneratorPage />} />
+              <Route path="/photo-generator" element={<PhotoGeneratorPage />} />
               <Route path="/favorites" element={<FavoritesPage />} />
-              <Route path="/top" element={<Top20Page />} />
-              <Route path="/userpictures" element={<UserPicturesPage />} />
+              <Route path="/user-pictures" element={<UserPicturesPage />} />
             </Route>
+            <Route path="/top" element={<Top20Page />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route element={<UserRoute />}>
               <Route path="/login" element={<LoginPage />} />
