@@ -24,6 +24,7 @@
 ### Register page 
 
 To access all the functionalities, you need to create your own account.
+
 ![image](https://user-images.githubusercontent.com/72854881/224130602-f7198875-1425-41b3-9707-639839b79371.png)
 
 ### Login page
