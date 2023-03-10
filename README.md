@@ -28,20 +28,19 @@ To access all the functionalities, you need to create your own account.
 ![image](https://user-images.githubusercontent.com/72854881/224130602-f7198875-1425-41b3-9707-639839b79371.png)
 
 ### Login page
-With your own account, you can log in and access all features.
+To access all features, you need to log in to your account.
 
 ![image](https://user-images.githubusercontent.com/72854881/224131254-55a1ec99-bee8-45b8-a0f4-04b30596547b.png)
 
 ### Chat page
 
-You don't have to be logged in to use the chat.
-Chat allows you to ask questions to bot.
+Logging in is not required to use the chat and ask questions to the bot.
 
 ![image](https://user-images.githubusercontent.com/72854881/224131842-14f8857a-f3ea-4a6e-a951-0fa7ffc24abc.png)
 
 ### Picture generator page
 
-Here you can generate your own pictures, you can just type and then generate anything you want and also you can save them.
+Here, you can generate your own pictures by simply typing whatever you want, and then save them.
 
 ![image](https://user-images.githubusercontent.com/72854881/224132329-3a5f3027-ad44-4d4b-894e-344e0e50bd66.png)
 
