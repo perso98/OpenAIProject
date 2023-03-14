@@ -228,3 +228,64 @@ nav a {
   color:red;
   padding: 0.4rem;
 }
+.comment-icon-button {
+  width:50%;
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+}
+
+.comment-icon {
+  color:black;
+  padding:0.5rem;
+}
+
+.picture-card-info {
+margin:0 1rem 0 1rem;
+display: flex;
+flex-direction: column;
+}
+.comment-style
+{
+  background-color: #1d1f20;
+  padding: 1rem;
+  border-radius: 25px;
+  color:white;
+  font-weight: normal !important;
+}
+
+.comment-container 
+{
+  color:black;
+  gap: 0.5rem;
+  display: flex;
+  margin-bottom: 1.5rem;
+  flex-direction: column;
+  align-items: left;
+  font-weight: bold;
+  max-width: 45vh;
+  word-wrap: break-word;
+}
+.user-comment-info
+{
+  display: flex;
+  justify-content: space-between;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+.time-info-comment
+{
+  font-weight: normal;
+  font-size: 0.9rem;
+}
+.dialog-container
+{
+  width: 50vh;
+  height: 40vh;
+  overflow-y: auto;
+}
+.dialog-title-comment
+{
+  display: flex;
+  justify-content: space-between;
+}

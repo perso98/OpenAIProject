@@ -208,3 +208,37 @@ export const getUserPictures = async (setPictures, setLikes, setIsLoading) => {
       console.log(err);
     });
 };
+
+export const addComment = async (id, text, setComments, comments) => {
+  try {
+    await axios
+      .post(`${API_URL}/comment/addComment`, {
+        id: id,
+        text: text,
+      })
+      .then((res) => {
+        setComments([
+          ...comments,
+          {
+            text: text,
+            createdAt: res.data.comment.createdAt,
+            User: {
+              login: res.data.user,
+            },
+          },
+        ]);
+      });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getComments = async (id, setComments) => {
+  try {
+    await axios.get(`${API_URL}/comment/comments/${id}`).then((res) => {
+      setComments(res.data);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
