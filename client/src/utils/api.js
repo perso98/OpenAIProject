@@ -113,8 +113,9 @@ export const registerAccount = async (login, password) => {
 
 export const logoutFromAccount = async (setUser) => {
   try {
-    await axios.post(`${API_URL}/user/logout`).then((res) => setUser());
+    await axios.post(`${API_URL}/user/logout`).then((res) => setUser(null));
   } catch (err) {
+    setUser(null);
     console.log(err);
   }
 };
@@ -233,10 +234,11 @@ export const addComment = async (id, text, setComments, comments) => {
   }
 };
 
-export const getComments = async (id, setComments) => {
+export const getComments = async (id, setComments, setLoading) => {
   try {
     await axios.get(`${API_URL}/comment/comments/${id}`).then((res) => {
       setComments(res.data);
+      setLoading(false);
     });
   } catch (err) {
     console.log(err);

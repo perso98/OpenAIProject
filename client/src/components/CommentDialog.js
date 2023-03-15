@@ -11,6 +11,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { IconButton, InputAdornment } from "@mui/material";
 import { addComment, getComments } from "../utils/api";
 import { AuthContext } from "../providers/AuthProvider ";
+import StarIcon from "@mui/icons-material/Star";
+import CircularProgress from "@mui/material/CircularProgress";
 import "../App.css";
 
 function CommentDialog(props) {
@@ -18,7 +20,7 @@ function CommentDialog(props) {
   const { user } = useContext(AuthContext);
   const [comments, setComments] = useState([]);
   useEffect(() => {
-    getComments(props.pictureId, setComments);
+    getComments(props.pictureId, setComments, props.setLoading);
   }, [props.pictureId]);
 
   return props.open ? (
@@ -32,14 +34,21 @@ function CommentDialog(props) {
       </DialogTitle>
       <DialogContent>
         <DialogContentText className="dialog-container">
-          {comments.length ? (
+          {props.loading ? (
+            <div className="circual-div">
+              <CircularProgress color="inherit" style={{ margin: "auto" }} />
+            </div>
+          ) : comments.length ? (
             comments.map((val) => (
               <div className="comment-container">
                 <div className="user-comment-info">
-                  <div>{val.User.login} </div>
+                  <div className="creator-container">
+                    {val.User.id === val.Picture.UserId ? <StarIcon /> : null}
+                    {val.User.login}
+                  </div>
+
                   <div className="time-info-comment">
-                    {val.createdAt.split("T")[0]}{" "}
-                    {val.createdAt.split("T")[1].split(".")[0].slice(0, 5)}
+                    {val.createdAt.replace("T", " ").slice(0, 19)}
                   </div>
                 </div>
                 <div className="comment-style">{val.text}</div>

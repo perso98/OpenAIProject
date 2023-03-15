@@ -10,6 +10,7 @@ import FavoriteIconLiked from "@mui/icons-material/Favorite";
 import { likePicture, dislikePicture } from "../utils/api";
 import CommentDialog from "./CommentDialog";
 function CardPicture(props) {
+  const [commentsLoading, setCommentsLoading] = useState(true);
   const [openComments, setOpenComments] = useState(false);
   const [pictureId, setPictureId] = useState(0);
   const handleCloseComments = () => {
@@ -45,6 +46,7 @@ function CardPicture(props) {
                   onClick={() => {
                     setOpenComments(true);
                     setPictureId(props.pictures[props.pictureNumber].id);
+                    setCommentsLoading(true);
                   }}
                 >
                   <CommentIcon className="comment-icon" />
@@ -141,6 +143,8 @@ function CardPicture(props) {
         open={openComments}
         handleClose={handleCloseComments}
         pictureId={pictureId}
+        loading={commentsLoading}
+        setLoading={setCommentsLoading}
       />
     </>
   );

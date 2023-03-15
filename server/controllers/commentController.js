@@ -1,4 +1,4 @@
-const { Comment, User } = require("../models");
+const { Comment, User, Picture } = require("../models");
 
 exports.addComment = async (req, res) => {
   const { id, text } = req.body;
@@ -8,7 +8,7 @@ exports.addComment = async (req, res) => {
       text: text,
       UserId: req.session.user.id,
     });
-    console.log(newComment.dataValues.createdAt);
+
     res.send({ user: req.session.user.login, comment: newComment.dataValues });
   } catch (err) {
     res.send({ message: err });
@@ -22,7 +22,7 @@ exports.comments = async (req, res) => {
   try {
     const comments = await Comment.findAll({
       where: { PictureId: id },
-      include: [{ model: User }],
+      include: [{ model: User }, { model: Picture }],
     });
     res.send(comments);
   } catch (err) {

@@ -5,7 +5,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   useEffect(() => {
     getAuth(setUser);
-  }, [user]);
+  }, []);
 
   const login = async (login, password) => {
     loginToAccount(setUser, login, password);
