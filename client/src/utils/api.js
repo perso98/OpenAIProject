@@ -43,7 +43,7 @@ export const generatePhoto = async (
   setLoading(true);
   setFirstLoadedImage(true);
   await axios
-    .post("http://localhost:3001/ai/generatePhoto", {
+    .post(`${API_URL}/ai/generatePhoto`, {
       text: text,
     })
 
@@ -221,11 +221,14 @@ export const addComment = async (id, text, setComments, comments) => {
         setComments([
           ...comments,
           {
+            id: res.data.comment.id,
             text: text,
             createdAt: res.data.comment.createdAt,
+            UserId: res.data.user.id,
             User: {
-              login: res.data.user,
+              login: res.data.user.login,
             },
+            Picture: { UserId: res.data.user.id },
           },
         ]);
       });
@@ -239,6 +242,18 @@ export const getComments = async (id, setComments, setLoading) => {
     await axios.get(`${API_URL}/comment/comments/${id}`).then((res) => {
       setComments(res.data);
       setLoading(false);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deleteComment = async (id, setComments, comments) => {
+  try {
+    await axios.post(`${API_URL}/comment/deleteComment`, { id }).then((res) => {
+      if (res.data.success)
+        setComments(comments.filter((val) => val.id !== id));
+      else console.log("Error");
     });
   } catch (err) {
     console.log(err);

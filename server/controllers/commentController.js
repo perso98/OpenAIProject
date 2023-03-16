@@ -9,7 +9,7 @@ exports.addComment = async (req, res) => {
       UserId: req.session.user.id,
     });
 
-    res.send({ user: req.session.user.login, comment: newComment.dataValues });
+    res.send({ user: req.session.user, comment: newComment.dataValues });
   } catch (err) {
     res.send({ message: err });
     console.log(err);
@@ -27,5 +27,16 @@ exports.comments = async (req, res) => {
     res.send(comments);
   } catch (err) {
     res.send(err);
+  }
+};
+
+exports.deleteComment = async (req, res) => {
+  const { id } = req.body;
+  try {
+    await Comment.destroy({ where: { id } });
+    res.send({ success: true });
+  } catch (err) {
+    console.log(err);
+    res.send({ success: false });
   }
 };

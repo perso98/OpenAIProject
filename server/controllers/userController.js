@@ -45,12 +45,12 @@ exports.loginToAccount = async (req, res) => {
   }
 };
 
-exports.logout = async (req, res, next) => {
+exports.logout = async (req, res) => {
   try {
     req.session.destroy();
-    next();
+    res.send({ success: true });
   } catch (err) {
     console.log(err);
-    next();
+    res.send({ success: false });
   }
 };

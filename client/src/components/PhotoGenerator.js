@@ -11,7 +11,7 @@ function PhotoGenerator() {
   const [photoUrl, setPhotoUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [firstLoadedImage, setFirstLoadedImage] = useState(false);
-  const [sendPicture, setSendPicture] = useState(false);
+  const [sendPicture, setSendPicture] = useState(true);
   const handleSubmit = async () => {
     generatePhoto(setLoading, setFirstLoadedImage, text, setPhotoUrl);
   };

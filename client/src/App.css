@@ -250,6 +250,7 @@ flex-direction: column;
   background-color: #1d1f20;
   padding: 1rem;
   border-radius: 25px;
+  width:80%;
   color:white;
   font-weight: normal !important;
 }
@@ -299,4 +300,10 @@ flex-direction: column;
 {
   margin-top: 15vh;
   display: flex;
+}
+.comment
+{
+  display: flex;
+justify-content: space-between;
+align-items: center;
 }

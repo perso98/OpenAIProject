@@ -9,10 +9,11 @@ import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton, InputAdornment } from "@mui/material";
-import { addComment, getComments } from "../utils/api";
+import { addComment, getComments, deleteComment } from "../utils/api";
 import { AuthContext } from "../providers/AuthProvider ";
 import StarIcon from "@mui/icons-material/Star";
 import CircularProgress from "@mui/material/CircularProgress";
+import ClearIcon from "@mui/icons-material/Clear";
 import "../App.css";
 
 function CommentDialog(props) {
@@ -44,14 +45,39 @@ function CommentDialog(props) {
                 <div className="user-comment-info">
                   <div className="creator-container">
                     {val.User.id === val.Picture.UserId ? <StarIcon /> : null}
-                    {val.User.login}
+                    <div
+                      style={{
+                        fontWeight: user.id === val.UserId ? "bold" : "normal",
+                      }}
+                    >
+                      {val.User.login}
+                    </div>
                   </div>
 
                   <div className="time-info-comment">
                     {val.createdAt.replace("T", " ").slice(0, 19)}
                   </div>
                 </div>
-                <div className="comment-style">{val.text}</div>
+                <div className="comment">
+                  <div
+                    className="comment-style"
+                    style={{
+                      background:
+                        user.id === val.UserId ? "#1d1f20" : "#383838",
+                    }}
+                  >
+                    {val.text}
+                  </div>
+                  {user.id === val.UserId ? (
+                    <IconButton
+                      onClick={() =>
+                        deleteComment(val.id, setComments, comments)
+                      }
+                    >
+                      <ClearIcon style={{ color: "red" }} />
+                    </IconButton>
+                  ) : null}
+                </div>
               </div>
             ))
           ) : (

@@ -15,6 +15,7 @@ function CardPicture(props) {
   const [pictureId, setPictureId] = useState(0);
   const handleCloseComments = () => {
     setOpenComments(false);
+    setPictureId(null);
   };
   return (
     <>
