@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    public: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 0,
+    },
   });
 
   Picture.associate = (models) => {

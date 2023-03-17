@@ -15,8 +15,8 @@ function PhotoGenerator() {
   const handleSubmit = async () => {
     generatePhoto(setLoading, setFirstLoadedImage, text, setPhotoUrl);
   };
-  const handleSavePicture = async () => {
-    savePicture(text, photoUrl);
+  const handleSavePicture = async (type) => {
+    savePicture(text, photoUrl, type);
   };
   return (
     <div className="generator-container">
@@ -60,19 +60,32 @@ function PhotoGenerator() {
               <img src={photoUrl} />
             </div>
             {sendPicture ? (
-              <Button
-                variant="contained"
-                color="success"
-                onClick={() => {
-                  handleSavePicture();
-                  setSendPicture(false);
-                }}
-              >
-                Save
-              </Button>
+              <div>
+                <Button
+                  variant="contained"
+                  color="success"
+                  style={{ marginRight: "2rem" }}
+                  onClick={() => {
+                    handleSavePicture(1);
+                    setSendPicture(false);
+                  }}
+                >
+                  Save as public
+                </Button>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={() => {
+                    handleSavePicture(0);
+                    setSendPicture(false);
+                  }}
+                >
+                  Save as private
+                </Button>
+              </div>
             ) : (
               <Button variant="contained" color="success" disabled={true}>
-                Save
+                Already saved
               </Button>
             )}
           </>

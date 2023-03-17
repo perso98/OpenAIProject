@@ -57,12 +57,13 @@ export const generatePhoto = async (
     });
 };
 
-export const savePicture = async (text, url) => {
+export const savePicture = async (text, url, type) => {
   try {
     await axios
       .post(`${API_URL}/picture/sendPicture`, {
-        text: text,
-        url: url,
+        text,
+        url,
+        type,
       })
       .then((res) => {
         console.log(res);
@@ -226,6 +227,7 @@ export const addComment = async (id, text, setComments, comments) => {
             createdAt: res.data.comment.createdAt,
             UserId: res.data.user.id,
             User: {
+              id: res.data.user.id,
               login: res.data.user.login,
             },
             Picture: { UserId: res.data.user.id },

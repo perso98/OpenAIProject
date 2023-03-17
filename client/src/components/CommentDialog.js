@@ -47,7 +47,7 @@ function CommentDialog(props) {
                     {val.User.id === val.Picture.UserId ? <StarIcon /> : null}
                     <div
                       style={{
-                        fontWeight: user.id === val.UserId ? "bold" : "normal",
+                        fontWeight: user?.id === val.UserId ? "bold" : "normal",
                       }}
                     >
                       {val.User.login}
@@ -63,12 +63,13 @@ function CommentDialog(props) {
                     className="comment-style"
                     style={{
                       background:
-                        user.id === val.UserId ? "#1d1f20" : "#383838",
+                        user?.id === val.UserId ? "#1d1f20" : "#383838",
                     }}
                   >
                     {val.text}
                   </div>
-                  {user.id === val.UserId ? (
+
+                  {user?.id === val.UserId || user?.id === val.Picture.id ? (
                     <IconButton
                       onClick={() =>
                         deleteComment(val.id, setComments, comments)

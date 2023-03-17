@@ -5,7 +5,7 @@ const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
 exports.sendPicture = async (req, res) => {
-  const { url, text } = req.body;
+  const { url, text, type } = req.body;
 
   try {
     const response = await axios.get(url, { responseType: "stream" });
@@ -18,6 +18,7 @@ exports.sendPicture = async (req, res) => {
       const picture = await Picture.create({
         url: `/uploads/${fileName}`,
         text: text,
+        public: type,
         UserId: req.session.user.id,
       });
       res.send({ success: true, picture });
@@ -43,6 +44,7 @@ exports.getPictures = async (req, res) => {
           },
         ],
         where: {
+          public: 1,
           id: {
             [Op.notIn]: Sequelize.literal(
               `(SELECT PictureId FROM Likes WHERE UserId = ${req.session.user.id})`
@@ -56,6 +58,7 @@ exports.getPictures = async (req, res) => {
       res.send(pictures);
     } else {
       const pictures = await Picture.findAll({
+        where: { public: 1 },
         include: [
           {
             model: User,
@@ -109,6 +112,7 @@ exports.getFavorites = async (req, res) => {
       },
     ],
     where: {
+      public: 1,
       id: {
         [Op.in]: Sequelize.literal(
           `(SELECT PictureId FROM Likes WHERE UserId = ${req.session.user.id})`
@@ -155,6 +159,7 @@ exports.dislikePicture = async (req, res) => {
 exports.getAllPictures = async (req, res) => {
   try {
     const pictures = await Picture.findAll({
+      where: { public: 1 },
       include: [
         {
           model: User,
