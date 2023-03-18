@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../App.css";
 import CommentIcon from "@mui/icons-material/Comment";
-import axios from "axios";
 import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import { IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import FavoriteIconLiked from "@mui/icons-material/Favorite";
-import { likePicture, dislikePicture } from "../utils/api";
+import { likePicture, dislikePicture, changeStatus } from "../utils/api";
+import { AuthContext } from "../providers/AuthProvider ";
 import CommentDialog from "./CommentDialog";
 function CardPicture(props) {
   const [commentsLoading, setCommentsLoading] = useState(true);
   const [openComments, setOpenComments] = useState(false);
   const [pictureId, setPictureId] = useState(0);
+  const { user } = useContext(AuthContext);
   const handleCloseComments = () => {
     setOpenComments(false);
     setPictureId(null);
@@ -52,6 +53,39 @@ function CardPicture(props) {
                 >
                   <CommentIcon className="comment-icon" />
                 </IconButton>
+                {user?.id === props.pictures[props.pictureNumber].User.id ? (
+                  props.pictures[props.pictureNumber].public ? (
+                    <Button
+                      color="success"
+                      variant="contained"
+                      onClick={() => {
+                        changeStatus(
+                          props.pictures[props.pictureNumber].id,
+                          0,
+                          props.pictures,
+                          props.setPictures
+                        );
+                      }}
+                    >
+                      Set as private
+                    </Button>
+                  ) : (
+                    <Button
+                      color="success"
+                      variant="contained"
+                      onClick={() => {
+                        changeStatus(
+                          props.pictures[props.pictureNumber].id,
+                          1,
+                          props.pictures,
+                          props.setPictures
+                        );
+                      }}
+                    >
+                      Set as public
+                    </Button>
+                  )
+                ) : null}
               </div>
 
               <div style={{ textAlign: "center" }}>

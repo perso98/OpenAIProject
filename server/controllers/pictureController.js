@@ -5,7 +5,7 @@ const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
 exports.sendPicture = async (req, res) => {
-  const { url, text, type } = req.body;
+  const { url, text, status } = req.body;
 
   try {
     const response = await axios.get(url, { responseType: "stream" });
@@ -18,7 +18,7 @@ exports.sendPicture = async (req, res) => {
       const picture = await Picture.create({
         url: `/uploads/${fileName}`,
         text: text,
-        public: type,
+        public: status,
         UserId: req.session.user.id,
       });
       res.send({ success: true, picture });
@@ -175,5 +175,16 @@ exports.getAllPictures = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.send(err);
+  }
+};
+
+exports.changeStatus = async (req, res) => {
+  const { id, status } = req.body;
+  try {
+    await Picture.update({ public: status }, { where: { id } });
+    res.send({ success: true });
+  } catch (err) {
+    res.send({ success: false });
+    console.log(err);
   }
 };

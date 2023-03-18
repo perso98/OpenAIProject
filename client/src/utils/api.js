@@ -57,13 +57,13 @@ export const generatePhoto = async (
     });
 };
 
-export const savePicture = async (text, url, type) => {
+export const savePicture = async (text, url, status) => {
   try {
     await axios
       .post(`${API_URL}/picture/sendPicture`, {
         text,
         url,
-        type,
+        status,
       })
       .then((res) => {
         console.log(res);
@@ -257,6 +257,22 @@ export const deleteComment = async (id, setComments, comments) => {
         setComments(comments.filter((val) => val.id !== id));
       else console.log("Error");
     });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const changeStatus = async (id, status, pictures, setPictures) => {
+  try {
+    await axios
+      .put(`${API_URL}/picture/changeStatus`, { id, status })
+      .then((res) => {
+        setPictures(
+          pictures.map((val) =>
+            val.id === id ? { ...val, public: status } : val
+          )
+        );
+      });
   } catch (err) {
     console.log(err);
   }
