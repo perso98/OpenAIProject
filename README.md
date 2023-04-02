@@ -1,6 +1,6 @@
 ## This project demonstrates some of the cool apps that can be done with the OpenAI API.
 
-## To run the project you can just install concurrently and then "npm run dev"
+## To run the project you can just install concurrently and then "npm run dev", you need to also change .env variables like API_KEY to your openai api, remember also to change your config to database in folder server/config/config.json.
 
 ## This app allows you to: 
 - chat with the OpenAI bot
