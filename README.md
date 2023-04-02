@@ -46,9 +46,10 @@ Here, you can generate your own pictures by simply typing whatever you want, and
 
 ### Your pics page
 
-Here you can check your generated pictures and also how many likes you have (soon others...).
+Here you can check your generated pictures and also change their public status.
 
-![image](https://user-images.githubusercontent.com/72854881/224132855-946bf05f-4211-4afd-9669-f0d880e51ea3.png)
+![image](https://user-images.githubusercontent.com/72854881/229366540-d0eca4d2-badd-4966-899f-71df8fea6852.png)
+
 
 ### Top 20 page
 
@@ -61,6 +62,11 @@ Here you can check the most 20 liked pictures.
 Here you can check pictures that you liked before.
 
 ![image](https://user-images.githubusercontent.com/72854881/224133794-c8b6eec0-a9c3-438e-b494-f349f5e768e5.png)
+
+### You can also comment pictures.
+
+![image](https://user-images.githubusercontent.com/72854881/229367286-d97ed369-4300-42b8-ab45-fd7a1fb92654.png)
+
 
 
 
