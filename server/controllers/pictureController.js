@@ -4,17 +4,22 @@ const { Sequelize } = require("sequelize");
 const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
+
+// Funkcja obsługująca przesyłanie zdjęcia
 exports.sendPicture = async (req, res) => {
   const { url, text, status } = req.body;
 
   try {
+    // Pobranie zdjęcia z podanego URL
     const response = await axios.get(url, { responseType: "stream" });
     const fileName = `${Date.now() + text}.png`;
     const filePath = path.join(__dirname, "..", "public", "uploads", fileName);
     const writeStream = fs.createWriteStream(filePath);
     response.data.pipe(writeStream);
 
+    // Po zakończeniu zapisu zdjęcia do pliku
     writeStream.on("finish", async () => {
+      // Utworzenie rekordu zdjęcia w bazie danych
       const picture = await Picture.create({
         url: `/uploads/${fileName}`,
         text: text,
@@ -29,6 +34,7 @@ exports.sendPicture = async (req, res) => {
   }
 };
 
+// Funkcja pobierająca zdjęcia, które użytkownik może oglądać
 exports.getPictures = async (req, res) => {
   try {
     if (req.session.user) {
@@ -57,6 +63,7 @@ exports.getPictures = async (req, res) => {
       });
       res.send(pictures);
     } else {
+      // Pobranie wszystkich zdjęć publicznych
       const pictures = await Picture.findAll({
         where: { public: 1 },
         include: [
@@ -78,6 +85,7 @@ exports.getPictures = async (req, res) => {
   }
 };
 
+// Funkcja pobierająca zdjęcia użytkownika
 exports.getUserPictures = async (req, res) => {
   const pictures = await Picture.findAll({
     include: [
@@ -99,6 +107,7 @@ exports.getUserPictures = async (req, res) => {
   res.send(pictures);
 };
 
+// Funkcja pobierająca ulubione zdjęcia użytkownika
 exports.getFavorites = async (req, res) => {
   const pictures = await Picture.findAll({
     include: [
@@ -126,6 +135,7 @@ exports.getFavorites = async (req, res) => {
   res.send(pictures);
 };
 
+// Funkcja obsługująca polubienie zdjęcia
 exports.likePicture = async (req, res) => {
   const { id } = req.body;
 
@@ -140,6 +150,7 @@ exports.likePicture = async (req, res) => {
   }
 };
 
+// Funkcja obsługująca usunięcie polubienia zdjęcia
 exports.dislikePicture = async (req, res) => {
   const { id } = req.body;
 
@@ -156,6 +167,7 @@ exports.dislikePicture = async (req, res) => {
   }
 };
 
+// Funkcja pobierająca wszystkie publiczne zdjęcia
 exports.getAllPictures = async (req, res) => {
   try {
     const pictures = await Picture.findAll({
@@ -178,6 +190,7 @@ exports.getAllPictures = async (req, res) => {
   }
 };
 
+// Funkcja obsługująca zmianę statusu zdjęcia (publiczne/prywatne)
 exports.changeStatus = async (req, res) => {
   const { id, status } = req.body;
   try {

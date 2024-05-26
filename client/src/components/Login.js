@@ -3,8 +3,11 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider ";
 import "../App.css";
 function Login() {
-  const { login } = useContext(AuthContext);
-  const [loginForm, setLoginForm] = useState({ login: "", password: "" });
+
+  const { login } = useContext(AuthContext);   // Pobranie funkcji logowania z kontekstu autoryzacji
+  const [loginForm, setLoginForm] = useState({ login: "", password: "" }); // Stan dla formularza logowania
+
+  // Funkcja obsługująca wysyłanie formularza logowania
   const handleSubmit = (user) => {
     login(user.login, user.password);
   };

@@ -1,5 +1,6 @@
 const { Comment, User, Picture } = require("../models");
 
+// Dodawanie nowego komentarza
 exports.addComment = async (req, res) => {
   const { id, text } = req.body;
   try {
@@ -16,6 +17,7 @@ exports.addComment = async (req, res) => {
   }
 };
 
+// Pobieranie komentarzy dla danego obrazka
 exports.comments = async (req, res) => {
   const { id } = req.params;
 
@@ -30,6 +32,7 @@ exports.comments = async (req, res) => {
   }
 };
 
+// Usuwanie komentarza
 exports.deleteComment = async (req, res) => {
   const { id } = req.body;
   try {

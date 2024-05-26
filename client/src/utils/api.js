@@ -1,7 +1,9 @@
 import axios from "axios";
 const API_URL = "http://localhost:3001";
 axios.defaults.withCredentials = true;
-//funkcja pobierająca odpowiedzi bota i updatejtująca czat
+
+
+// Funkcja pobierająca odpowiedzi ai i aktualizująca czat
 export const handleSubmit = async (
   question,
   setQuestion,
@@ -34,6 +36,7 @@ export const handleSubmit = async (
   setMessageLoading(false);
 };
 
+// Funkcja generująca zdjęcie na podstawie tekstu
 export const generatePhoto = async (
   setLoading,
   setFirstLoadedImage,
@@ -57,6 +60,7 @@ export const generatePhoto = async (
     });
 };
 
+// Funkcja zapisująca zdjęcie
 export const savePicture = async (text, url, status) => {
   try {
     await axios
@@ -73,6 +77,7 @@ export const savePicture = async (text, url, status) => {
   }
 };
 
+// Funkcja pobierająca autoryzację użytkownika
 export const getAuth = async (setUser) => {
   try {
     await axios.get(`${API_URL}/user/getAuth`).then((res) => {
@@ -83,6 +88,7 @@ export const getAuth = async (setUser) => {
   }
 };
 
+// Funkcja logowania do konta
 export const loginToAccount = async (setUser, login, password) => {
   try {
     await axios
@@ -99,6 +105,7 @@ export const loginToAccount = async (setUser, login, password) => {
   }
 };
 
+// Funkcja rejestracji konta
 export const registerAccount = async (login, password) => {
   try {
     await axios
@@ -112,6 +119,7 @@ export const registerAccount = async (login, password) => {
   }
 };
 
+// Funkcja wylogowania z konta
 export const logoutFromAccount = async (setUser) => {
   try {
     await axios.post(`${API_URL}/user/logout`).then((res) => setUser(null));
@@ -120,6 +128,8 @@ export const logoutFromAccount = async (setUser) => {
     console.log(err);
   }
 };
+
+// Funkcja polubienia zdjęcia
 export const likePicture = async (id, setPictures, pictures) => {
   try {
     await axios
@@ -138,6 +148,8 @@ export const likePicture = async (id, setPictures, pictures) => {
     console.log(err);
   }
 };
+
+// Funkcja usunięcia polubienia zdjęcia
 export const dislikePicture = async (id, setPictures, pictures) => {
   try {
     await axios
@@ -157,6 +169,7 @@ export const dislikePicture = async (id, setPictures, pictures) => {
   }
 };
 
+// Funkcja pobierająca wszystkie publiczne zdjęcia
 export const getPictures = async (setPictures, setLikes, setIsLoading) => {
   axios
     .get(`${API_URL}/picture/getPictures`)
@@ -170,6 +183,8 @@ export const getPictures = async (setPictures, setLikes, setIsLoading) => {
       console.log(err);
     });
 };
+
+// Funkcja pobierająca 20 najpopularniejszych zdjęć
 export const getAllPictures = async (setPictures, setLikes, setIsLoading) => {
   axios
     .get(`${API_URL}/picture/getAllPictures`)
@@ -185,6 +200,8 @@ export const getAllPictures = async (setPictures, setLikes, setIsLoading) => {
       console.log(err);
     });
 };
+
+// Funkcja pobierająca ulubione zdjęcia użytkownika
 export const getFavorites = async (setPictures, setLikes, setIsLoading) => {
   axios
     .get(`${API_URL}/picture/getFavorites`)
@@ -198,6 +215,7 @@ export const getFavorites = async (setPictures, setLikes, setIsLoading) => {
     });
 };
 
+// Funkcja pobierająca zdjęcia użytkownika
 export const getUserPictures = async (setPictures, setLikes, setIsLoading) => {
   axios
     .get(`${API_URL}/picture/getUserPictures`)
@@ -211,6 +229,7 @@ export const getUserPictures = async (setPictures, setLikes, setIsLoading) => {
     });
 };
 
+// Funkcja dodająca komentarz do zdjęcia
 export const addComment = async (id, text, setComments, comments) => {
   try {
     await axios
@@ -239,6 +258,7 @@ export const addComment = async (id, text, setComments, comments) => {
   }
 };
 
+// Funkcja pobierająca komentarze do zdjęcia
 export const getComments = async (id, setComments, setLoading) => {
   try {
     await axios.get(`${API_URL}/comment/comments/${id}`).then((res) => {
@@ -250,6 +270,7 @@ export const getComments = async (id, setComments, setLoading) => {
   }
 };
 
+// Funkcja usuwająca komentarz
 export const deleteComment = async (id, setComments, comments) => {
   try {
     await axios.post(`${API_URL}/comment/deleteComment`, { id }).then((res) => {
@@ -262,6 +283,7 @@ export const deleteComment = async (id, setComments, comments) => {
   }
 };
 
+// Funkcja zmieniająca status (publiczny/prywatny) zdjęcia
 export const changeStatus = async (id, status, pictures, setPictures) => {
   try {
     await axios

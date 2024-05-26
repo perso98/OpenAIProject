@@ -10,10 +10,15 @@ import { likePicture, dislikePicture, changeStatus } from "../utils/api";
 import { AuthContext } from "../providers/AuthProvider ";
 import CommentDialog from "./CommentDialog";
 function CardPicture(props) {
+
+  // Stany
   const [commentsLoading, setCommentsLoading] = useState(true);
   const [openComments, setOpenComments] = useState(false);
   const [pictureId, setPictureId] = useState(0);
-  const { user } = useContext(AuthContext);
+
+  const { user } = useContext(AuthContext); // Kontekst autoryzacji użytkownika
+
+  // Funkcja zamykająca okno dialogowe komentarzy
   const handleCloseComments = () => {
     setOpenComments(false);
     setPictureId(null);

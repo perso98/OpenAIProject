@@ -7,14 +7,18 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { generatePhoto, savePicture } from "../utils/api";
 import "../App.css";
 function PhotoGenerator() {
-  const [text, setText] = useState("");
-  const [photoUrl, setPhotoUrl] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [firstLoadedImage, setFirstLoadedImage] = useState(false);
-  const [sendPicture, setSendPicture] = useState(true);
+  const [text, setText] = useState(""); // Stan dla tekstu wprowadzonego przez użytkownika
+  const [photoUrl, setPhotoUrl] = useState(""); // Stan dla URL wygenerowanego zdjęcia
+  const [loading, setLoading] = useState(false); // Stan ładowania dla generowania zdjęcia
+  const [firstLoadedImage, setFirstLoadedImage] = useState(false); // Stan określający, czy pierwsze zdjęcie zostało załadowane
+  const [sendPicture, setSendPicture] = useState(true); // Stan określający, czy zdjęcie zostało już zapisane
+
+  // Funkcja obsługująca wysyłanie tekstu do wygenerowania zdjęcia
   const handleSubmit = async () => {
     generatePhoto(setLoading, setFirstLoadedImage, text, setPhotoUrl);
   };
+
+   // Funkcja obsługująca zapisywanie wygenerowanego zdjęcia
   const handleSavePicture = async (type) => {
     savePicture(text, photoUrl, type);
   };

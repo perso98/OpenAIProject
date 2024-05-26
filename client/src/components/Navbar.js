@@ -3,6 +3,8 @@ import "../App.css";
 import { AuthContext } from "../providers/AuthProvider ";
 import { NavLink } from "react-router-dom";
 function Navbar() {
+
+  // Kontekst do użytkownika i wylogowania
   const { user, logout } = useContext(AuthContext);
   return (
     <nav>

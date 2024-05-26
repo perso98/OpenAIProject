@@ -1,10 +1,14 @@
 const { Configuration, OpenAIApi } = require("openai");
 require('dotenv').config();
+
+// Konfiguracja klienta OpenAI za pomocą klucza API z pliku .env
 const configuration = new Configuration({
   organization: "org-ZfCMQTMHvH0VP2a6p0R00tuP",
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
+
+// Funkcja obsługująca żądanie uzyskania odpowiedzi od modelu OpenAI
 exports.getAnswer = async (req, res) => {
   const { question } = req.body;
   try {
@@ -21,6 +25,7 @@ exports.getAnswer = async (req, res) => {
   }
 };
 
+// Funkcja obsługująca żądanie wygenerowania zdjęcia przez model OpenAI
 exports.generatePhoto = async (req, res) => {
   const { text } = req.body;
   try {

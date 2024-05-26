@@ -8,12 +8,16 @@ import { AuthContext } from "../providers/AuthProvider ";
 import "../App.css";
 
 function Chat() {
+
+  // Stany
   const [chatHistory, setChatHistory] = useState([]);
   const [messageLoading, setMessageLoading] = useState(false);
   const [question, setQuestion] = useState("");
-  const chatHistoryRef = useRef(null);
-  const inputRef = useRef(null);
-  const { user } = useContext(AuthContext);
+  const chatHistoryRef = useRef(null); // Ref dla kontenera historii czatu
+  const inputRef = useRef(null); // Ref dla pola tekstowego
+  const { user } = useContext(AuthContext); // Pobranie użytkownika z kontekstu
+
+  // Przewijanie do końca historii czatu po każdej aktualizacji
   useEffect(() => {
     if (chatHistoryRef.current) {
       chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
@@ -23,6 +27,7 @@ function Chat() {
     }
   }, [chatHistory]);
 
+  // Wywołanie funkcji handleSubmit z parametrami
   const handleOnSubmit = () => {
     handleSubmit(question, setQuestion, setChatHistory, setMessageLoading);
   };

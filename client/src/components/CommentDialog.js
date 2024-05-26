@@ -17,10 +17,13 @@ import ClearIcon from "@mui/icons-material/Clear";
 import "../App.css";
 
 function CommentDialog(props) {
-  const [text, setText] = useState("");
-  const { user } = useContext(AuthContext);
-  const [comments, setComments] = useState([]);
-  useEffect(() => {
+
+  const [text, setText] = useState(""); // Stan dla tekstu komentarza
+  const { user } = useContext(AuthContext); // Pobranie użytkownika z kontekstu autoryzacji
+  const [comments, setComments] = useState([]); // Stan dla listy komentarzy
+
+  // useEffect  do pobierania komentarzy po zmianie pictureId
+  useEffect(() => { 
     getComments(props.pictureId, setComments, props.setLoading);
   }, [props.pictureId]);
 

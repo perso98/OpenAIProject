@@ -4,11 +4,13 @@ import "../App.css";
 import { registerAccount } from "../utils/api";
 
 function Register() {
-  const [loginForm, setLoginForm] = useState({
+  const [loginForm, setLoginForm] = useState({ // Stan dla formularza rejestracji
     login: "",
     password: "",
     confirmPassword: "",
   });
+
+  // Funkcja obsługująca wysyłanie formularza rejestracji
   const handleSubmit = (user) => {
     registerAccount(user.login, user.password);
   };
