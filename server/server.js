@@ -7,6 +7,7 @@ const pictureRoute = require("./routes/picture");
 const commentRoute = require("./routes/comment");
 const userRoute = require("./routes/user");
 const app = express();
+require('dotenv').config();
 const session = require("express-session");
 const path = require("path");
 app.use(
